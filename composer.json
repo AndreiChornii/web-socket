@@ -1,0 +1,20 @@
+{
+    "name": "andreichornii/web-socket",
+    "autoload": {
+        "psr-4": {
+            "Andreichornii\\WebSocket\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Andrei Chornii (Lenovo)",
+            "email": "andrei.chornii@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "openswoole/ide-helper": "~22.0.1"
+    },
+    "require": {
+        "openswoole/core": "22.1.2"
+    }
+}
