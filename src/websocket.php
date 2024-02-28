@@ -1,16 +1,24 @@
 <?php
 
-use OpenSwoole\WebSocket\{Server, Frame};
+use OpenSwoole\WebSocket\Server;
+use OpenSwoole\WebSocket\Frame;
 use OpenSwoole\Constant;
 use OpenSwoole\Table;
 use OpenSwoole\Http\Request;
 
-$server = new Server("127.0.0.1", 9501, Server::SIMPLE_MODE, Constant::SOCK_TCP);
+// $server = new Server("127.0.0.1", 9501, Server::SIMPLE_MODE, Constant::SOCK_TCP);
+$server = new Server("127.0.0.1", 9501, Server::SIMPLE_MODE, Constant::SOCK_TCP || Constant::SSL);
 
 $fds = new Table(1024);
 $fds->column('fd', Table::TYPE_INT, 4);
 $fds->column('name', Table::TYPE_STRING, 16);
 $fds->create();
+
+$server->set([
+    'ssl_cert_file' => '/home/andreichornii/web-socket/localhost+2.pem',
+    'ssl_key_file' => '/home/andreichornii/web-socket/localhost+2-key.pem'
+]);
+
 
 $server->on("Start", function (Server $server) {
     echo "Swoole WebSocket Server is started at " . $server->host . ":" . $server->port . "\n";

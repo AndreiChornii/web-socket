@@ -1,18 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Socket</title>
 </head>
+
 <body>
     <div>
-        Message: 
+        Message:
         <input type="text" value="Hello!" id="message" />
         <input type="button" value="Send" onclick="sendMessage(event)">
         <br />
         <ul id="wesocket_events"></ul>
     </div>
+    <script type="text/javascript">
+        let echo_service;
+        let append = function (text) {
+            document.getElementById("wesocket_events").insertAdjacentHTML('beforeend', "<li>" + text + ";</li>");
+        }
+        window.onload = function () {
+            echo_service = new WebSocket('ws://127.0.0.1:9501');
+            echo_service.onmessage = function (event) {
+                append(event.data);
+            }
+            echo_service.onopen = function () {
+                append("Connected to WebSocket!");
+            }
+            echo_service.onclose = function () {
+                append("Connection closed");
+            }
+            echo_service.onerror = function (error) {
+                append("Connection error: " + error);
+            }
+        }
+        function sendMessage(event) {
+            console.log(event);
+            let message = document.getElementById("message").value;
+            console.log(message);
+            echo_service.send(message);
+        }
+    </script>
 </body>
-<script src="client.js"></script>
+<!-- <script src="../src/client.js"></script> -->
+<!-- <script src="http://localhost:3000/client.js"></script> -->
+
 </html>

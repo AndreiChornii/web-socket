@@ -3,7 +3,7 @@ let append = function(text){
     document.getElementById("wesocket_events").insertAdjacentHTML('beforeend', "<li>" + text + ";</li>");
 }
 window.onload = function(){
-    echo_service = new WebSocket('ws://127.0.0.1:9501');
+    echo_service = new WebSocket('wss://127.0.0.1:9501');
     echo_service.onmessage = function(event) {
         append(event.data);
     }
